@@ -17,11 +17,15 @@
 @interface MasterViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *horseTableView;
+
 @property (nonatomic) NSArray *horses;
+@property (nonatomic) NSIndexPath *selectedIndexPath;
 
 @end
 
 @implementation MasterViewController
+
+#pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
@@ -29,6 +33,12 @@
     
     self.horses = [NSArray arrayWithArray:[self prepareDataSource]];
     self.title = @"Horses";
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.horseTableView deselectRowAtIndexPath:self.selectedIndexPath animated:YES];
 }
 
 #pragma mark - Helpers
@@ -80,11 +90,11 @@
  
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSIndexPath *indexPath = [self.horseTableView indexPathForSelectedRow];
+    self.selectedIndexPath = [self.horseTableView indexPathForSelectedRow];
     
     if ([segue.identifier isEqualToString:kHorseDetailSegueIdentifier])
     {
-        Horse *horse = [self.horses objectAtIndex:indexPath.row];
+        Horse *horse = [self.horses objectAtIndex:self.selectedIndexPath.row];
         DetailViewController *detailVC = segue.destinationViewController;
         detailVC.horse = horse;
     }
