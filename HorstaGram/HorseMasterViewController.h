@@ -1,5 +1,5 @@
 //
-//  HorseTableViewCell.h
+//  HorseMasterViewController.h
 //  HorstaGram
 //
 //  Created by Shahin on 2017-10-19.
@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Horse.h"
 
-@interface HorseTableViewCell : UITableViewCell
-
-- (void)configureWithHorse:(Horse *)horse;
+@interface HorseMasterViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end
+
